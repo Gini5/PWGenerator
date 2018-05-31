@@ -1,11 +1,11 @@
 "use strict";
 var PWGenerator = function () {
     LocalContractStorage.defineMapProperty(this, "repo", {
-        parse: function (str) {
-            return parseInt(str);
+        stringify: function (obj) {
+            return JSON.stringify(obj);
         },
-        stringify: function (o) {
-            return o.toString();
+        parse: function (str) {
+            return JSON.parse(str);
         }
     });
 };
@@ -21,19 +21,18 @@ PWGenerator.prototype = {
         }
         var pw = this._randomPassword(10);
         this.repo.put(key, {
-            origin: key,
             pw: pw,
             from: Blockchain.transaction.from
         });
         return {
             status: 0,
-            pw: pw
+            pw: pw,
         }
     },
 
     getPW: function (key) {
         var res = this.repo.get(key);
-        console("key:"+key+", pw:"+res);
+        console.log("key:"+key+", pw:"+res);
         return res;
     },
 
