@@ -21,6 +21,7 @@ PWGenerator.prototype = {
         }
         var pw = this._randomPassword(10);
         this.repo.put(key, {
+            origin: key,
             pw: pw,
             from: Blockchain.transaction.from
         });
@@ -31,7 +32,9 @@ PWGenerator.prototype = {
     },
 
     getPW: function (key) {
-        return this.repo.get(key);
+        var res = this.repo.get(key);
+        console("key:"+key+", pw:"+res);
+        return res;
     },
 
     _randomPassword: function(size){
